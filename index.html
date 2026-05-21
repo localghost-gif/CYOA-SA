@@ -4,79 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Tiebreaker - AI Decision Assistant</title>
-    <!-- Tailwind CSS with Typography Plugin for clean markdown rendering -->
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <!-- Tailwind CSS with Typography & Forms plugins -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
     <!-- Marked.js to convert Markdown to HTML -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- FontAwesome for Icons -->
+    <!-- FontAwesome for matching terminal/cybersecurity icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* Custom overrides for markdown tables rendered inside the prose class */
+        /* Base scrollbar styles for terminal aesthetic */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020617; /* slate-950 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #065f46; /* emerald-800 */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10b981; /* emerald-500 */
+        }
+
+        /* Override markdown table styling to match Jørn's resume syntax */
         .prose table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1.5em;
-            margin-bottom: 1.5em;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
         }
         .prose th, .prose td {
-            border: 1px solid #e2e8f0;
+            border: 1px solid #065f46; /* emerald-800 */
             padding: 8px 12px;
             text-align: left;
         }
         .prose th {
-            background-color: #f8fafc;
+            background-color: #022c22; /* emerald-950 */
+            color: #34d399; /* emerald-400 */
         }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen text-slate-800 font-sans">
+<body class="bg-slate-950 min-h-screen text-slate-300 font-mono flex flex-col justify-between">
 
-    <!-- Navigation / Header -->
-    <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-10 shadow-sm">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-                <i class="fa-solid fa-scale-balanced text-indigo-600"></i> The Tiebreaker
-            </h1>
-            <span class="text-sm text-slate-500">AI Decision Assistant</span>
+    <!-- Header / Navbar -->
+    <header class="border-b border-emerald-950 bg-slate-950 py-5 px-6">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+            <div>
+                <h1 class="text-xl font-bold text-emerald-400 flex items-center gap-2 tracking-wide">
+                    <i class="fa-solid fa-terminal text-emerald-500"></i> The Tiebreaker
+                </h1>
+                <p class="text-xs text-slate-500 mt-1">#DecisionEngine #StructuredAnalysis #CloudHosted</p>
+            </div>
+            <span class="text-xs text-slate-500 bg-slate-900 border border-emerald-950 px-2 py-1 rounded">
+                HOSTED AT: jorninthe.cloud
+            </span>
         </div>
     </header>
 
     <!-- Main Container -->
-    <main class="max-w-4xl mx-auto px-4 py-8">
+    <main class="max-w-5xl w-full mx-auto px-4 py-8 flex-grow">
         
-        <!-- Setup Notice / API Key Section -->
-        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-6">
-            <h2 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3">
-                <i class="fa-solid fa-key text-slate-400 mr-1"></i> OpenAI Configuration
+        <!-- API Configuration / Settings Block -->
+        <div class="bg-slate-900/60 p-6 rounded-lg border border-emerald-950/80 mb-8">
+            <h2 class="text-sm font-semibold text-emerald-400 tracking-wider mb-4">
+                &lt; Configuration &gt;
             </h2>
-            <div class="flex flex-col sm:flex-row gap-3">
-                <input type="password" id="apiKey" 
-                       placeholder="Enter your OpenAI API Key (sk-...)" 
-                       class="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                <p class="text-xs text-slate-500 sm:max-w-xs flex items-center">
-                    Your API key is saved locally in your browser and is only sent directly to OpenAI's servers.
-                </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                <div class="md:col-span-2">
+                    <input type="password" id="apiKey" 
+                           placeholder="Enter OpenAI API Key (sk-...)" 
+                           class="w-full bg-slate-950 border border-emerald-900 text-slate-100 placeholder-slate-600 px-4 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 text-sm">
+                </div>
+                <div class="text-xs text-slate-500">
+                    The API Key is securely held in your browser's local storage and is not stored externally.
+                </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            <!-- Left Side: User Inputs -->
-            <div class="md:col-span-1 space-y-6">
-                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                    <h2 class="font-bold text-slate-900 mb-4">Input Your Dilemma</h2>
+            <!-- Left Panel: Input & Settings -->
+            <div class="lg:col-span-5 space-y-6">
+                <div class="bg-slate-900/60 p-6 rounded-lg border border-emerald-950/80">
+                    <h2 class="text-sm font-semibold text-emerald-400 tracking-wider mb-4">&lt; Dilemma Input &gt;</h2>
                     
-                    <div class="space-y-4">
+                    <div class="space-y-5">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">The Decision</label>
-                            <textarea id="decision" rows="5" 
-                                      placeholder="e.g., Should I buy a remote-first property or rent in the city center?" 
-                                      class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none"></textarea>
+                            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">The Decision</label>
+                            <textarea id="decision" rows="6" 
+                                      placeholder="Provide the context of the decision you need to make..." 
+                                      class="w-full bg-slate-950 border border-emerald-900 text-slate-100 placeholder-slate-600 px-3 py-2 text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 resize-none"></textarea>
                         </div>
 
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Framework</label>
+                            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Analysis Framework</label>
                             <select id="framework" 
-                                    class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white">
+                                    class="w-full bg-slate-950 border border-emerald-900 text-slate-100 px-3 py-2 text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500">
                                 <option value="pros-cons">Pros & Cons List</option>
                                 <option value="comparison">Comparison Table</option>
                                 <option value="swot">SWOT Analysis</option>
@@ -84,35 +108,34 @@
                         </div>
 
                         <button onclick="generateAnalysis()" id="submitBtn"
-                                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-lg transition duration-150 flex justify-center items-center gap-2 text-sm">
-                            <span>Analyze Decision</span>
-                            <i class="fa-solid fa-arrow-right"></i>
+                                class="w-full bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500 text-emerald-400 font-medium py-2.5 px-4 rounded-md transition duration-150 flex justify-center items-center gap-2 text-sm">
+                            <span>[ RUN ANALYSIS ]</span>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Side: Analysis Display -->
-            <div class="md:col-span-2">
-                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm min-h-[400px] flex flex-col justify-between">
+            <!-- Right Panel: Results Console -->
+            <div class="lg:col-span-7">
+                <div class="bg-slate-900/40 p-6 rounded-lg border border-emerald-950/80 min-h-[440px] flex flex-col justify-between">
                     
-                    <!-- Output Area -->
+                    <!-- Output Wrapper -->
                     <div id="outputContainer">
-                        <div id="placeholder" class="text-center py-20 text-slate-400">
-                            <i class="fa-solid fa-chart-simple text-4xl mb-4 text-slate-300"></i>
-                            <p class="text-sm font-medium">Your analysis will appear here.</p>
-                            <p class="text-xs max-w-xs mx-auto mt-1">Fill out your dilemma, pick a framework, and generate a structured overview.</p>
+                        <div id="placeholder" class="text-center py-20 text-slate-600">
+                            <i class="fa-solid fa-terminal text-3xl mb-4 text-slate-700"></i>
+                            <p class="text-sm font-medium text-slate-400">Console idle.</p>
+                            <p class="text-xs max-w-xs mx-auto mt-2 text-slate-500">Awaiting inputs to begin decision rendering pathways.</p>
                         </div>
                         
-                        <!-- Markdown Output Target -->
-                        <div id="output" class="prose prose-slate max-w-none hidden"></div>
+                        <!-- Output Area (Styled Markdown) -->
+                        <div id="output" class="prose prose-invert prose-emerald max-w-none text-slate-300 text-sm hidden"></div>
                     </div>
 
-                    <!-- Loader (Hidden by default) -->
+                    <!-- Loader -->
                     <div id="loader" class="hidden text-center py-20">
-                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-indigo-600 border-t-transparent mb-4"></div>
-                        <p class="text-sm font-medium text-slate-600">The Tiebreaker is evaluating your options...</p>
-                        <p class="text-xs text-slate-400 mt-1">Formulating balanced insights</p>
+                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-emerald-500 border-t-transparent mb-4"></div>
+                        <p class="text-sm font-medium text-emerald-400 font-mono">[ ANALYZING PATHWAYS... ]</p>
+                        <p class="text-xs text-slate-500 mt-2">Evaluating parameters and structured logic...</p>
                     </div>
 
                 </div>
@@ -121,8 +144,15 @@
         </div>
     </main>
 
+    <!-- Footer -->
+    <footer class="border-t border-emerald-950 py-4 px-6 bg-slate-950 text-center">
+        <p class="text-xs text-slate-600">
+            &copy; 2026 jorninthe.cloud | Managed via Google Cloud CDN & DNS
+        </p>
+    </footer>
+
     <script>
-        // Load stored API key on startup if available
+        // Set key configuration on load
         document.addEventListener('DOMContentLoaded', () => {
             const savedKey = localStorage.getItem('tiebreaker_api_key');
             if (savedKey) {
@@ -140,30 +170,27 @@
             const loader = document.getElementById('loader');
             const submitBtn = document.getElementById('submitBtn');
 
-            // Inputs Validation
             if (!apiKey) {
-                alert("Please configure an OpenAI API Key to use this application.");
+                alert("API Key required. Please input a valid OpenAI credential in the configuration block.");
                 return;
             }
             if (!decision) {
-                alert("Please enter the decision you need analyzed.");
+                alert("Decision query empty. Please describe your scenario.");
                 return;
             }
 
-            // Save key to localStorage for future sessions
             localStorage.setItem('tiebreaker_api_key', apiKey);
 
-            // Set Loading State
             placeholder.classList.add('hidden');
             output.classList.add('hidden');
             loader.classList.remove('hidden');
             submitBtn.disabled = true;
-            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            submitBtn.classList.add('opacity-40', 'cursor-not-allowed');
 
             const prompts = {
-                "pros-cons": `The user needs help making this decision: "${decision}". Provide a structured, balanced list of Pros and Cons. Group them into distinct categories (e.g., Financial, Lifestyle, Career) and assign an estimated impact score from 1 (minor) to 5 (major) to each. Use clean Markdown formatting.`,
-                "comparison": `The user needs to compare options for this decision: "${decision}". Identify the primary options and the key criteria they should be evaluated against. Generate a structured Markdown table comparing these options, followed by a brief, objective summary.`,
-                "swot": `The user needs to analyze this strategic decision: "${decision}". Conduct a detailed SWOT analysis (Strengths, Weaknesses, Opportunities, Threats). Structure the output with clear headings, bullets, and actionable insights for each category. Use Markdown.`
+                "pros-cons": `Analyze the decision: "${decision}". Provide a categorized Pros and Cons list inside bracketed sections. Assign an impact rating from [1] to [5] for each item. Deliver in clean Markdown syntax.`,
+                "comparison": `Analyze and compare the choices involved in this decision: "${decision}". Define comparison parameters and render them in a clean Markdown table format, followed by a logical terminal summary.`,
+                "swot": `Perform a complete SWOT analysis (Strengths, Weaknesses, Opportunities, Threats) for the decision context: "${decision}". Output clean Markdown headings, clear bulleted details, and core takeaways.`
             };
 
             try {
@@ -178,14 +205,14 @@
                         messages: [
                             {
                                 role: 'system',
-                                content: "You are 'The Tiebreaker,' an objective decision assistant. Your goal is to provide clear, structured, and balanced analysis without choosing for the user."
+                                content: "You are 'The Tiebreaker' system. Provide rigorous, objective decision logic without choosing for the user. Always style headers inside brackets like '< Header Title >' and use clean monospace formatting in Markdown."
                             },
                             {
                                 role: 'user',
                                 content: prompts[framework]
                             }
                         ],
-                        temperature: 0.7
+                        temperature: 0.6
                     })
                 });
 
@@ -193,21 +220,20 @@
 
                 if (response.ok) {
                     const markdownText = data.choices[0].message.content;
-                    // Parse Markdown to styled HTML using marked.js
                     output.innerHTML = marked.parse(markdownText);
                     loader.classList.add('hidden');
                     output.classList.remove('hidden');
                 } else {
-                    throw new Error(data.error?.message || "An unknown error occurred with the API.");
+                    throw new Error(data.error?.message || "Communication fault with host server.");
                 }
 
             } catch (error) {
                 loader.classList.add('hidden');
                 placeholder.classList.remove('hidden');
-                alert(`Error: ${error.message}`);
+                alert(`Execution Error: ${error.message}`);
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                submitBtn.classList.remove('opacity-40', 'cursor-not-allowed');
             }
         }
     </script>
